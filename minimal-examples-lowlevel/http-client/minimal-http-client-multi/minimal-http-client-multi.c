@@ -646,11 +646,10 @@ int main(int argc, const char **argv)
 #endif
 
 	lws_context_info_defaults(&info, NULL);memset(&i, 0, sizeof i); /* otherwise uninitialized garbage */
-
 	lws_cmdline_option_handle_builtin(argc, argv, &info);
 
 	info.signal_cb = signal_cb;
-	info.options = LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
+	info.options |= LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
 
 	if (lws_cmdline_option(argc, argv, switches[LWS_SW_UV].sw))
 		info.options |= LWS_SERVER_OPTION_LIBUV;
@@ -770,7 +769,7 @@ int main(int argc, const char **argv)
 
 	/* force h1 even if h2 available */
 	if (lws_cmdline_option(argc, argv, "--h3"))
-		info.alpn = "h3";
+		i.alpn = "h3";
 
 	if (lws_cmdline_option(argc, argv, "--quicv2"))
 		info.options |= LWS_SERVER_OPTION_QUIC_LATEST_VERSION;
